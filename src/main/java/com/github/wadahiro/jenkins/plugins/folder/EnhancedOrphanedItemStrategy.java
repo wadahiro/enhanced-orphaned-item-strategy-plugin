@@ -35,7 +35,7 @@ import com.cloudbees.hudson.plugins.folder.computed.OrphanedItemStrategyDescript
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import hudson.Extension;
-import hudson.model.Project;
+import hudson.model.AbstractProject;
 import hudson.model.TaskListener;
 import hudson.model.TopLevelItem;
 
@@ -66,11 +66,11 @@ public class EnhancedOrphanedItemStrategy extends DefaultOrphanedItemStrategy {
             TaskListener listener) throws IOException, InterruptedException {
         if (disableProject) {
             for (I item : orphaned) {
-                if (item instanceof Project) {
-                    Project p = (Project) item;
+                if (item instanceof AbstractProject) {
+                    AbstractProject p = (AbstractProject) item;
                     if (!p.isDisabled()) {
-                        listener.getLogger().printf("Disable Project: %s%n", item.getFullDisplayName());
-                        ((Project) item).disable();
+                        listener.getLogger().printf("Disable Project: %s%n", p.getFullDisplayName());
+                        p.disable();
                     }
                 }
             }
